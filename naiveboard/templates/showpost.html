@@ -1,0 +1,61 @@
+{% extends 'layout.html' %}
+
+{% block ck_contents %}
+<div id="ck-entries">		
+	<a href="{{ url_for('showentries') }}" class="contentbutton">To-List</a>
+	<a href="{{ url_for('deletepost', post_id=post.id) }}" class="contentbutton">Delete</a>
+	<a href="{{ url_for('deletepost', post_id=post.id) }}" class="contentbutton">Modify</a>
+	<table>
+		<thead>
+			<tr>
+				<th class="index-id">No.</th>
+				<th class="index-title">Title</th>
+				<th class="index-time">Author</th>
+				<th class="index-time">Time</th>
+			</tr>		
+		</thead>
+		<tbody>		
+			<tr>
+				<td class="entry-id">{{ post.id }}</td>
+				<td class="entry-title">{{ post.title }}</td>
+				<td class="entry-time">{{ post.user.username }}</td>
+				<td class="entry-time">			
+					{% if post.date == today %}
+						{{ post.time }}
+					{% else %}
+						{{ post.date }}
+					{% endif %}
+				</td>				
+			</tr>
+			<tr>
+				<td colspan="4" class="entry-text">
+					{{ post.text|nl2br }}
+				</td>
+			{% for comment in post.comments %}
+			</tr>
+				<td>&#8627;</td>				
+				<td class="entry-comment">
+					{{ comment.text }}
+				</td>
+				<td class="entry-time">{{ comment.user.username }}</td>
+				<td class="entry-time">			
+					{% if comment.date == today %}
+						{{ comment.time }}
+					{% else %}
+						{{ comment.date }}
+					{% endif %}
+				</td>				
+			<tr>
+			{% endfor %}
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	<form action="{{ url_for('addcomment', post_id=post.id) }}" method="post">
+		<span class="loginfo">{{ session.username }}'s</span>	
+		<label for="text">comment:</label>
+		<textarea type="text" name="text" id="commentarea"></textarea>
+		<button type="submit" class="gobutton" id="gocomment">Go!</button>
+	</form>
+</div>
+{% endblock %}

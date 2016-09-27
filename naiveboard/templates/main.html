@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block ck_contents %}
+<div id="ck-entries">
+	{% if session.logged_in %}
+	<a href="{{ url_for('addpost') }}" class="contentbutton">Add-post</a>
+	{% endif %}
+	<table>
+		<thead>
+			<tr>
+				<th class="index-id">No.</th>
+				<th class="index-title">Title</th>
+				<th class="index-time">Author</th>
+				<th class="index-time">Time</th>
+			</tr>		
+		</thead>
+		<tbody>
+		{% for entry in entries %}
+			<tr>
+				<td class="entry-id">{{ entry.id }}</td>
+				<td class="entry-title">
+					<a href="{{ url_for('showpost', post_id=entry.id) }}">{{ entry.title }}</a>
+				</td>
+				<td class="entry-time">{{ entry.user.username }}</td>
+				<td class="entry-time">			
+					{% if entry.date == today %}
+						{{ entry.time }}
+					{% else %}
+						{{ entry.date }}
+					{% endif %}
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+{% endblock %}

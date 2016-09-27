@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block ck_contents %}
+<div class="ck-signup">
+	<h3 class="title">Make your account!!</h3>
+	{% if error %}<p class=error><strong>Error:</strong> {{ error }}
+	{% endif %}
+	<div class="input">
+	<form action="{{ url_for('signup') }}" method="post">
+		<label for="username">Username:</label>&nbsp;
+		<input type="text" name="username">
+		(4~20 characters)<br>
+		<label for="password">Password:</label>&nbsp;
+		<input type="password" name="password">
+		(4~20 characters)<br>
+		<label for="cfpassword">Confirm Password:</label>&nbsp;
+		<input type="password" name="cfpassword">
+		<br><br>
+		<button type="submit">Sign-up</button>
+	</form>
+	</div>
+</div>
+{% endblock %}
