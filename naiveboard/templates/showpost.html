@@ -1,10 +1,12 @@
 {% extends 'layout.html' %}
 
 {% block ck_contents %}
-<div id="ck-entries">		
+<div id="ck-entries">
 	<a href="{{ url_for('showentries') }}" class="contentbutton">To-List</a>
+	{% if post.user.username == session.username %}
 	<a href="{{ url_for('deletepost', post_id=post.id) }}" class="contentbutton">Delete</a>
-	<a href="{{ url_for('deletepost', post_id=post.id) }}" class="contentbutton">Modify</a>
+	<a href="{{ url_for('modifypost', post_id=post.id) }}" class="contentbutton">Modify</a>
+	{% endif %}
 	<table>
 		<thead>
 			<tr>
@@ -17,8 +19,14 @@
 		<tbody>		
 			<tr>
 				<td class="entry-id">{{ post.id }}</td>
-				<td class="entry-title">{{ post.title }}</td>
-				<td class="entry-time">{{ post.user.username }}</td>
+				<td class="entry-title"><a>{{ post.title }}</a> [{{post.comments|length}}]</td>
+				<!--td class="entry-time">{{ post.user.username }}</td-->
+				<td class="entry-user">
+					{% if post.user == None %}
+						Deleted user
+					{% else %}
+						{{ post.user.username }}
+					{% endif %}
 				<td class="entry-time">			
 					{% if post.date == today %}
 						{{ post.time }}
@@ -51,11 +59,13 @@
 		</tbody>
 	</table>
 	<br>
-	<form action="{{ url_for('addcomment', post_id=post.id) }}" method="post">
-		<span class="loginfo">{{ session.username }}'s</span>	
-		<label for="text">comment:</label>
-		<textarea type="text" name="text" id="commentarea"></textarea>
-		<button type="submit" class="gobutton" id="gocomment">Go!</button>
-	</form>
+	{% if session.logged_in %}
+		<form action="{{ url_for('addcomment', post_id=post.id) }}" method="post">
+			<span class="loginfo">{{ session.username }}'s</span>	
+			<label for="text">comment:</label>
+			<textarea type="text" name="text" id="commentarea"></textarea>
+			<button type="submit" class="gobutton" id="gocomment">Go!</button>
+		</form>
+	{% endif %}
 </div>
 {% endblock %}

@@ -8,14 +8,14 @@
 	{% if session.logged_in %}
 	<h3 class="title">Add a new post.</h3>
 	<div class="input">
-	<form action="{{ url_for('addpost') }}" method="post">
+	<form action="{{ url_for('modifypost', post_id=post.id) }}" method="post">
 		<label for="title">Title:</label>&nbsp;
-		<input type="text" name="title" id="title">
+		<input type="text" name="title" id="title" value="{{ post.title }}">
 		<br>
 		<label for="text">Text:</label>&nbsp;<br>
-		<textarea type="text" name="text" id="text"></textarea>
+		<textarea type="text" name="text" id="text">{{ post.text }}</textarea>
 		<br>
-		<button type="submit" class="gobutton" id="gopost">Go!</button>
+		<button type="submit" class="gobutton" id="gopost">Modify</button>
 	</form>
 	</div>
 	{% else %}

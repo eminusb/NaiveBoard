@@ -217,13 +217,18 @@ color: #D0ECE7;
 .entry-title {	
 	padding-left: 1rem;
 	text-align: left;	
-	color: #2CC0B3;	
+	color: #D0ECE7;
+	/*color: #2CC0B3;	*/
 	text-decoration: none;
+	font-size: 0.8rem;
+	/*line-height: 0.5rem;*/
 }
 
 .entry-title a{
 	color: #2CC0B3;	
 	text-decoration: none;
+	font-size: 1rem;
+	/*line-height: 1rem;*/
 }
 
 .entry-text {
@@ -235,7 +240,7 @@ color: #D0ECE7;
 	color: #E3E4E5;
 }
 
-.entry-time {
+.entry-time, .entry-user {
 	color: #E3E4E5;
 	padding-left: 0.2rem;
 	padding-right: 0.2rem;
@@ -282,4 +287,7 @@ table {
 	width: 100%;
 }
 
-
+.error {
+	color: #FF7260;
+	font-weight: bold;
+}

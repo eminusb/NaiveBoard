@@ -26,17 +26,10 @@ def shutdown_session(exception=None):
 	db_session.remove()
 
 
-'''
-@app.route('/AustinBoard/main')
-def startboard():
-	session['logged_in'] = False
-	session['content_empty'] = True
-	#return render_template('layout.html')
-	return redirect(url_for('showentries')
-'''
 
 @app.route('/AustinBoard/main')
 def showentries():
+
 	entries = db_session.query(Post).order_by(desc('id'))
 	numposts = db_session.query(Post).count()
 	numusers = db_session.query(User).count()
@@ -49,6 +42,7 @@ def showentries():
 
 @app.route('/AustinBoard/login', methods=['POST'])
 def login():
+
 	error = None	
 	query = db_session.query(User)
 	user = query.filter(User.username==request.form['username']).first()
@@ -59,19 +53,24 @@ def login():
 	else:
 		session['logged_in'] = True
 		session['username'] = request.form['username']
+
 	return redirect(url_for('showentries', error=error))
 
 
 @app.route('/AustinBoard/signup', methods=['POST', 'GET'])
 def signup():
-	error = None
+
+	error = None	
 	if request.method == 'POST':
 		username = request.form['username']
 		password = request.form['password']
 		cfpassword = request.form['cfpassword']
 	
-		if len(username)<4 or 20<len(username):
-			error = 'Invalid length of username'
+		u = db_session.query(User).filter(User.username==username).first()		
+		if not u is None:
+			error = 'Existing username'
+		elif len(username)<4 or 20<len(username):
+			error = 'Invalid length of username'		
 		elif len(password)<4 or 20<len(password):
 			error = 'Invalid length of password'
 		elif password != cfpassword:
@@ -82,7 +81,6 @@ def signup():
 			db_session.commit()
 			session['logged_in'] = True
 			session['username'] = request.form['username']
-
 			return redirect(url_for('showentries'))
 
 	numposts = db_session.query(Post).count()
@@ -126,7 +124,6 @@ def addpost():
 			post.user = db_session.query(User).\
 						filter(User.username==session['username']).one()
 
-			print(text)
 			db_session.add(post)
 			db_session.commit()
 			return redirect(url_for('showentries'))
@@ -166,7 +163,8 @@ def addcomment(post_id):
 
 				db_session.add(comment)
 				db_session.commit()
-				return redirect(url_for('showpost', post_id=post_id))
+
+	return redirect(url_for('showpost', post_id=post_id))			
 
 
 @app.route('/AustinBoard/deletepost_<post_id>')
@@ -178,5 +176,27 @@ def deletepost(post_id):
 			db_session.delete(post)
 			db_session.commit()
 			return redirect(url_for('showentries'))	
-		else:
-			return redirect(url_for('showpost', post_id=post_id))
+
+	return redirect(url_for('showpost', post_id=post_id))
+
+
+@app.route('/AustinBoard/modifypost_<post_id>', methods=['POST', 'GET'])
+def modifypost(post_id):
+	post = db_session.query(Post).filter(Post.id==post_id).one()
+
+	if request.method == 'POST':
+		if session['logged_in']:
+			if post.user.username==session['username']:
+				title = request.form['title']
+				text  = request.form['text']
+				now = datetime.datetime.now()
+				post = Post(title, text, now)
+				
+				db_session.add(post)
+				db_session.commit()
+				return redirect(url_for('showentries'))
+
+	numposts = db_session.query(Post).count()
+	numusers = db_session.query(User).count()	
+	return render_template('modify.html', post=post,
+							numusers=numusers, numposts=numposts)
