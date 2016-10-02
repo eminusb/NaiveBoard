@@ -3,17 +3,32 @@
 {% block ck_contents %}
 <div id="ck-entries">
 	<a href="{{ url_for('showentries') }}" class="contentbutton">To-List</a>
-	{% if error %}<p class=error>Error: {{ error }}</p>
+
+	{#% if error.title %}
+		<script type="text/javascript">alert("{{ error.title }}");</script>
 	{% endif %}
+	{% if error.text %}
+		<script type="text/javascript">alert("{{ error.text }}");</script>
+	{% endif %}
+	{% if error.text or error.title %}
+		<script type="text/javascript">history.go(-1);</script>
+	{% endif %#}
+
+	{% for message in get_flashed_messages(category_filter=['addpost']) %}	
+		<script type="text/javascript">
+			alert("{{ message }}")
+		</script>
+	{% endfor %}
+
 	{% if session.logged_in %}
 	<h3 class="title">Add a new post.</h3>
 	<div class="input">
 	<form action="{{ url_for('addpost') }}" method="post">
 		<label for="title">Title:</label>&nbsp;
-		<input type="text" name="title" id="title">
+		<input type="text" name="title" id="title" value="{{ title }}">
 		<br>
 		<label for="text">Text:</label>&nbsp;<br>
-		<textarea type="text" name="text" id="text"></textarea>
+		<textarea type="text" name="text" id="text">{{ text }}</textarea>
 		<br>
 		<button type="submit" class="gobutton" id="gopost">Go!</button>
 	</form>

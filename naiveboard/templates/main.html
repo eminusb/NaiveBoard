@@ -19,7 +19,7 @@
 			<tr>
 				<td class="entry-id">{{ post.id }}</td>
 				<td class="entry-title">
-					<a href="{{ url_for('showpost', post_id=post.id) }}">{{ post.title }}</a> [{{ post.comments|length }}]
+					<a href="{{ url_for('showpost', post_id=post.id) }}">{{ post.title }}</a>&nbsp;&nbsp;[{{ post.comments|length }}]
 				</td>
 				<td class="entry-user">
 					{% if post.user == None %}

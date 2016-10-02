@@ -2,9 +2,16 @@
 
 {% block ck_contents %}
 <div class="ck-signup">
-	<h3 class="title">Make your account!!</h3>
-	{% if error %}<p class=error>Error: {{ error }}</p>
-	{% endif %}
+	<a href="{{ url_for('showentries') }}" class="contentbutton">To-List</a>
+
+	<h3 class="title">Make your account!!</h3>	
+
+	{% for message in get_flashed_messages(category_filter=['signup']) %}
+		<script type="text/javascript">
+			alert("{{ message }}");
+		</script>		
+	{% endfor %}
+	
 	<div class="input">
 	<form action="{{ url_for('signup') }}" method="post">
 		<label for="username">Username:</label>&nbsp;

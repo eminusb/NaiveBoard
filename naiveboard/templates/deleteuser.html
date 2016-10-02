@@ -2,9 +2,19 @@
 
 {% block ck_contents %}
 <div class="ck-signup">
+	<a href="{{ url_for('showentries') }}" class="contentbutton">To-List</a>
+
 	<h3 class="title">Are you sure you want to delete your account?</h3>
-	{% if error %}<p class=error><strong>Error:</strong> {{ error }}
-	{% endif %}
+
+	{#% if error.deluser %}
+		<script type="text/javascript">alert("{{ error.deluser }}");</script>
+	{% endif %#}
+	{% for message in get_flashed_messages(category_filter=['deluser']) %}
+		<script type="text/javascript">
+			alert("{{ message }}");
+		</script>
+	{% endfor %}
+	
 	<div class="input">
 	<form action="{{ url_for('deleteuser') }}" method="post">
 		<label for="username">Username:</label>&nbsp;

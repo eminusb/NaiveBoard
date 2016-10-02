@@ -3,17 +3,25 @@
 {% block ck_contents %}
 <div id="ck-entries">
 	<a href="{{ url_for('showentries') }}" class="contentbutton">To-List</a>
-	{% if error %}<p class=error>Error: {{ error }}</p>
-	{% endif %}
+
+	{#% if error %}<p class=error>Error: {{ error }}</p>
+	{% endif %#}
+
+	{% for message in get_flashed_messages(category_filter=['modpost']) %}	
+		<script type="text/javascript">
+			alert("{{ message }}")
+		</script>
+	{% endfor %}
+
 	{% if session.logged_in %}
 	<h3 class="title">Add a new post.</h3>
 	<div class="input">
-	<form action="{{ url_for('modifypost', post_id=post.id) }}" method="post">
+	<form action="{{ url_for('modifypost', post_id=post_id) }}" method="post">
 		<label for="title">Title:</label>&nbsp;
-		<input type="text" name="title" id="title" value="{{ post.title }}">
+		<input type="text" name="title" id="title" value="{{ title }}">
 		<br>
 		<label for="text">Text:</label>&nbsp;<br>
-		<textarea type="text" name="text" id="text">{{ post.text }}</textarea>
+		<textarea type="text" name="text" id="text">{{ text }}</textarea>
 		<br>
 		<button type="submit" class="gobutton" id="gopost">Modify</button>
 	</form>

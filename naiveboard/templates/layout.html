@@ -4,7 +4,10 @@
 <head>
 	<meta charset="utf-8"/>
 	<title>AutinBoard</title>	
-	<link rel="stylesheet" type="text/css" href="/static/style.css"</>
+	<!--link rel="stylesheet" type="text/css" href="/static/style.css"</-->
+	<link rel="stylesheet" type="text/css" 
+		  href="{{ url_for('static', filename='style.css') }}"</>
+	
 </head>
 
 
@@ -19,13 +22,18 @@
 </div>
 
 
-{#% block ck_frame %#}
 <div id="ck-frame">
 	
   	{% block ck_contents %}{% endblock %}
-	
+
+	{% for message in get_flashed_messages(category_filter=['login']) %}	
+		<script type="text/javascript">
+			alert("{{ message }}")
+		</script>
+	{% endfor %}
+
 	{% block ck_login %}
-	<div id="ck-login">
+	<div id="ck-login">	
 		{% if not session.logged_in %}
 		<form action="{{ url_for('login') }}" method="post">
 			<div class="input">
@@ -59,15 +67,14 @@
 				<br>Do you wanna delete your account?&nbsp;&nbsp;
 				<a href="{{ url_for('deleteuser') }}">Delete</a>
 			</div>
-		{% endif %}
+		{% endif %}	
+
 	</div>
 	{% endblock %}	
 	<br>
 
-	{#% block ck_comment %}{% endblock %#}
-
 </div>
-{#% endblock ck_frame %#}
+
 
 <div id="ck-footer">
 	<p>&copy;Copyright <i><b>Austin Homeproduction</b></i></p>

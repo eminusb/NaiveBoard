@@ -4,7 +4,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, Unicode, String, Boolean, ForeignKey
 #import datetime
 
-engine = create_engine('sqlite:///naiveboard/database.db', echo=False, convert_unicode=True)
+#engine = create_engine('sqlite:///naiveboard/database.db', echo=False, convert_unicode=True)
+engine = create_engine('postgresql://postgres:dhcndrl1@localhost:5555/pgdatabase', echo=False, convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
 Base = declarative_base()
@@ -22,7 +23,7 @@ class User(Base):
 		self.username = username
 		self.password = password
 	def __repr__(self):
-		return '<User %s>' % (self.username)
+		return '<User %s: %s>' % (self.username, self.password)
 
 
 class Post(Base):
@@ -30,9 +31,10 @@ class Post(Base):
 
 	id = Column(Integer, primary_key=True)
 	title 	= Column(String(50), nullable=False)
-	text	= Column(String(500), nullable=False)
+	text	= Column(String(2000), nullable=False)
 	date 	= Column(String(10), nullable=False)
 	time	= Column(String(8), nullable=False)
+	tag		= Column(String(100), nullable=True)
 	
 	user_id = Column(Integer, ForeignKey('usertable.id'))
 	user = relationship('User', backref='posts')
@@ -65,3 +67,22 @@ class Comment(Base):
 		self.time	= when.strftime("%H:%M:%S")
 	def __repr__(self):
 		return '<Comment %s>' % (self.text)
+
+
+def check_username(username):
+	query = db_session.query(User)
+	user = query.filter(User.username==username).first()
+	if user == None:
+		return False
+	else:
+		return True
+
+def check_password(user, password):
+	user.passowrd == password
+	pass
+
+
+def validate_username(username):
+	query = db_session.query(User)
+	user = query.filter(User.username==username).first()
+	pass
