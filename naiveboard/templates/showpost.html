@@ -36,15 +36,15 @@
 			<tr>
 				<td class="entry-id">{{ post.id }}</td>
 				<td class="entry-title">
-				<a>{{ post.title }}</a>&nbsp;&nbsp;[{{post.comments|length}}]
-				</td>
-				<!--td class="entry-time">{{ post.user.username }}</td-->
+					<a>{{ post.title }}</a>&nbsp;&nbsp;[{{post.comments|length}}]
+				</td>				
 				<td class="entry-user">
 					{% if post.user == None %}
 						Deleted user
 					{% else %}
 						{{ post.user.username }}
 					{% endif %}
+				</td>
 				<td class="entry-time">			
 					{% if post.date == today %}
 						{{ post.time }}
@@ -57,8 +57,9 @@
 				<td colspan="4" class="entry-text">
 					{{ post.text|nl2br }}
 				</td>
-			{% for comment in post.comments %}
 			</tr>
+			{% for comment in post.comments %}
+			<tr>
 				<td>&#8627;</td>				
 				<td class="entry-comment">
 					{{ comment.text }}
@@ -77,9 +78,8 @@
 						{{ comment.date }}
 					{% endif %}
 				</td>				
-			<tr>
-			{% endfor %}
 			</tr>
+			{% endfor %}
 		</tbody>
 	</table>
 	<br>
@@ -92,5 +92,13 @@
 			<button type="submit" class="gobutton" id="gocomment">Go!</button>
 		</form>
 	{% endif %}
+	
+	<br>
+	<span class="tagtitle">Tag:&nbsp;&nbsp;</span>
+	
+	{% for tag in post.tags %}
+		<span class="tagvalue">{{ tag.text }}</span>&nbsp;
+	{% endfor %}
+
 </div>
 {% endblock %}

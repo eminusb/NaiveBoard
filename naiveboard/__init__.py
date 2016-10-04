@@ -1,8 +1,13 @@
-from flask import Flask, render_template, session, request, redirect, url_for, flash, get_flashed_messages
-from naiveboard.database import engine, db_session, Base, User, Post, Comment
+from flask import Flask, render_template, session, request, \
+				  redirect, url_for, flash, get_flashed_messages
+from naiveboard.database import engine, db_session, Base, \
+								User, Post, Comment, Tag, \
+								print_table, delete_all_cols
 from sqlalchemy import desc
 from naiveboard.nl2br import nl2br
+from naiveboard.austinfunct import get_taglist
 import datetime
+
 
 app = Flask(__name__)
 #app.config.update(DEBUG=True)
@@ -38,11 +43,11 @@ def showentries():
 	numposts = db_session.query(Post).count()
 	numusers = db_session.query(User).count()
 	today = datetime.datetime.now().strftime("%y-%m-%d")	
-	users = db_session.query(User).all()
-	print('\n')
-	for user in users:
-		print(user)
-	print('\n')
+
+	print_table(User)
+	print_table(Post)
+	print_table(Tag)
+
 	return render_template('main.html', 
 							entries=entries, 
 							numusers=numusers, numposts=numposts, 
@@ -143,10 +148,13 @@ def addpost():
 
 	title = ""
 	text = ""
+	tags = ""
 	if request.method == 'POST':
 		if session['logged_in']:
 			title = request.form['title']
 			text  = request.form['text']
+			tags  = request.form['tags']
+			tagtextlist = get_taglist(tags)
 			now = datetime.datetime.now()
 
 			if len(title) == 0:
@@ -163,11 +171,22 @@ def addpost():
 				error['text'] = 'Too long text (Under 2000 charaters)'
 				flash('Too long text (Under 2000 charaters)', 'addpost')
 
+			for tagtext in tagtextlist:
+				if len(tagtext) > 20:
+					error['tag'] = 'Too long tag (Under 20 characters)'
+					flash('Too long tag (Under 20 characters)', 'addpost')
+					break
+
 			messages = get_flashed_messages(category_filter=['addpost'])
 			if len(messages) == 0:
-				post = Post(title, text, now)			
+				post = Post(title, text, now)
 				post.user = db_session.query(User).\
 						filter(User.username==session['username']).one()
+				for tagtext in tagtextlist:
+					tag = db_session.query(Tag).filter(Tag.text==tagtext).first()
+					if tag is None:
+						tag = Tag(tagtext)
+					tag.posts.append(post)
 
 				db_session.add(post)
 				db_session.commit()
@@ -177,7 +196,7 @@ def addpost():
 	numusers = db_session.query(User).count()	
 	return render_template('addpost.html', 
 							numusers=numusers, numposts=numposts,
-							title=title, text=text)
+							title=title, text=text, tags=tags)
 
 
 @app.route('/AustinBoard/showpost_<post_id>')

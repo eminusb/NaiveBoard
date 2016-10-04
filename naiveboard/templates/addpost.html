@@ -25,11 +25,15 @@
 	<div class="input">
 	<form action="{{ url_for('addpost') }}" method="post">
 		<label for="title">Title:</label>&nbsp;
-		<input type="text" name="title" id="title" value="{{ title }}">
-		<br>
+		<input type="text" name="title" id="title" value="{{ title }}">		
+		<div class="hint">Under 50 characters</div>
 		<label for="text">Text:</label>&nbsp;<br>
 		<textarea type="text" name="text" id="text">{{ text }}</textarea>
-		<br>
+		<div class="hint">Under 2000 characters</div>
+		<label for="tags">Tag:</label>&nbsp;
+		<input type="text" name="tags" id="tags" value="{{ tags }}">
+		<div class="hint">Under 20 characters for each tag<br>
+						  which is separated by semicolon (;)</div>
 		<button type="submit" class="gobutton" id="gopost">Go!</button>
 	</form>
 	</div>

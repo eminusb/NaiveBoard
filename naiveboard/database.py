@@ -1,7 +1,7 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Table, ForeignKey,\
+					   Column, Integer, Unicode, String, Boolean
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, Unicode, String, Boolean, ForeignKey
 #import datetime
 
 #engine = create_engine('sqlite:///naiveboard/database.db', echo=False, convert_unicode=True)
@@ -33,8 +33,7 @@ class Post(Base):
 	title 	= Column(String(50), nullable=False)
 	text	= Column(String(2000), nullable=False)
 	date 	= Column(String(10), nullable=False)
-	time	= Column(String(8), nullable=False)
-	tag		= Column(String(100), nullable=True)
+	time	= Column(String(8), nullable=False)	
 	
 	user_id = Column(Integer, ForeignKey('usertable.id'))
 	user = relationship('User', backref='posts')
@@ -69,6 +68,25 @@ class Comment(Base):
 		return '<Comment %s>' % (self.text)
 
 
+postxtag_table = Table('association', Base.metadata, 
+	Column('posttable_id', Integer, ForeignKey('posttable.id')),
+	Column('tagtable_id', Integer, ForeignKey('tagtable.id'))
+)
+class Tag(Base):
+	__tablename__ = 'tagtable'
+
+	id = Column(Integer, primary_key=True)
+	text = Column(String(20), nullable=False)
+
+	posts = relationship('Post', backref='tags', secondary=postxtag_table)
+
+	def __init__(self, text):
+		self.text = text
+
+	def __repr__(self):
+		return '<Tag ''%s''>' % (self.text)
+
+
 def check_username(username):
 	query = db_session.query(User)
 	user = query.filter(User.username==username).first()
@@ -86,3 +104,15 @@ def validate_username(username):
 	query = db_session.query(User)
 	user = query.filter(User.username==username).first()
 	pass
+
+def print_table(classname):
+	cols = db_session.query(classname).order_by(classname.id).all()
+	for col in cols:
+		print(col)
+	print('\n')
+
+def delete_all_cols(classname):
+	cols = db_session.query(classname).order_by(classname.id).all()
+	for col in cols:
+		db_session.delete(col)
+	db_session.commit()

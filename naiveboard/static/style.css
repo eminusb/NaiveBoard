@@ -105,7 +105,7 @@ color: #D0ECE7;
 	color: #F6F7F8;
 	padding-left: 10px;
 }
-.ck-signup label{
+.ck-signup label {
 	display: inline-block;
 	width: 12rem;
 	text-align: right;
@@ -172,7 +172,7 @@ color: #D0ECE7;
 }
 
 .gobutton{
-	display: inline-block;
+	/*display: inline-block;*/
 	/*width: 3rem;*/
 	height: 1.5rem;
 	background-color: #D0ECE7;
@@ -187,16 +187,41 @@ color: #D0ECE7;
 #ck-entries input, textarea {
 	width: 36rem;
 	color: #111111;
-	margin-bottom: 0.5rem;
+	/*margin-bottom: 0.5rem;*/
+}
+#ck-entries label{
+	display: inline-block;
+	width: 2rem;
+	text-align: right;
 }
 #ck-entries textarea {	
-	height: 32rem;
+	height: 27rem;
 	margin-left: 2.8rem;
 }
 #ck-entries #commentarea {
 	margin-top: 0.5rem;
 	height: 3rem;	
 }
+#ck-entries .hint {
+	color: #F6F7F8;
+	font-size: 0.8rem;
+	font-weight: normal;
+	text-align: right;
+	margin-right: 1.9rem;
+	margin-bottom: 0.4rem;
+}
+
+#ck-entries .tagtitle {
+	font-size: 1rem;
+	color: #F6F7F8;
+}
+#ck-entries .tagvalue {	
+	font-size: 1rem;	
+	color: #F4733D;
+	background-color: #38595E;
+	/*#0B5345;*/
+}
+
 
 #ck-footer {
 	width: 960px;
