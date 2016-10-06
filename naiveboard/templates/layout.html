@@ -7,7 +7,7 @@
 	<!--link rel="stylesheet" type="text/css" href="/static/style.css"</-->
 	<link rel="stylesheet" type="text/css" 
 		  href="{{ url_for('static', filename='style.css') }}"</>
-	
+	<script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
 
 
@@ -18,7 +18,9 @@
 	<span class="statstitle">Number of users :</span>
 	<span class="statsvalue">{{ numusers }}</span>&nbsp;&nbsp;
 	<span class="statstitle">Number of posts :</span>
-	<span class="statsvalue">{{ numposts }}</span>		
+	<span class="statsvalue">{{ numposts }}</span>
+	
+	{% block ck_message %}{% endblock %}
 </div>
 
 
@@ -71,8 +73,14 @@
 
 	</div>
 	{% endblock %}	
-	<br>
-
+		
+	<div id="ck-tagbox">
+		<label>Tag:</label>&nbsp;
+		{% for tag in alltags %}
+			<a href="{{ url_for('showtaggedlist', tag_id=tag.id) }}" class="tagvalue">{{ tag.text }}</a>&nbsp;
+		{% endfor %}
+	</div>
+	
 </div>
 
 

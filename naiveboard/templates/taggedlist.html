@@ -2,9 +2,10 @@
 
 {% block ck_contents %}
 <div id="ck-entries">
-	{% if session.logged_in %}
+	{#% if session.logged_in %}
 	<a href="{{ url_for('addpost') }}" class="contentbutton">Add-post</a>
-	{% endif %}
+	{% endif %#}
+	<span class="titletag">{{ tag.text }}</span>
 	<table>
 		<thead>
 			<tr>
@@ -12,7 +13,7 @@
 				<th class="index-title">Title</th>
 				<th class="index-time">Author</th>
 				<th class="index-time">Time</th>
-			</tr>
+			</tr>		
 		</thead>
 		<tbody>
 		{% for post in entries %}

@@ -16,7 +16,8 @@ color: #D0ECE7;
 	width: 960px;
 	margin: 20px auto;
 	padding: 10px;
-	color: #E3E4E5;
+	color: #E3E4E5;	
+	position: relative;
 	/*border: 1px solid #AA1111;*/
 }
 
@@ -211,17 +212,25 @@ color: #D0ECE7;
 	margin-bottom: 0.4rem;
 }
 
-#ck-entries .tagtitle {
+.tagtitle {
 	font-size: 1rem;
 	color: #F6F7F8;
 }
-#ck-entries .tagvalue {	
+.tagvalue {	
 	font-size: 1rem;	
 	color: #F4733D;
 	background-color: #38595E;
+	text-decoration: none; 
 	/*#0B5345;*/
 }
-
+.titletag {	
+	font-size: 1.2rem;	
+	font-weight: bold;
+	color: #F4733D;
+	background-color: #38595E;
+	margin-left: 0.5rem;
+	/*#0B5345;*/
+}
 
 #ck-footer {
 	width: 960px;
@@ -316,4 +325,46 @@ table {
 .error {
 	color: #FF7260;
 	font-weight: bold;
+}
+
+#ck-tagbox {
+	width: 17.4rem;
+	padding: 0.4rem;
+	border: 1px solid #A2D9CE;
+	/*font-weight: bold;*/
+	vertical-align: middle;
+	text-align: justify;
+	line-height: 1.5rem;
+	margin-top: 0.8rem;		
+	word-break: keep-all;
+}
+
+#ck-tagbox label{
+	display: inline-block;	
+	line-height: 2rem;
+	font-weight: bold;		
+}
+
+#ck-header .ck-popup {
+	display: block;
+	position: absolute; top:12rem; left:27rem;	
+	border: 1px solid #FF7260;
+	font-size: 1rem;
+	color: #FF7260;
+	background-color: #27484C;
+	font-weight: bold;
+	padding: 1rem;
+	text-align: center;
+}
+
+.ck-popup a{
+	display: inline-block;
+	width: 3rem;
+	height: 1.4rem;
+	background-color: #FF7260;
+	color: #505050;
+	border-radius: 0.5rem;
+	text-align: center;	
+	margin: 0.4rem;
+	text-decoration: none;
 }

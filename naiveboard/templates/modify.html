@@ -4,7 +4,14 @@
 <div id="ck-entries">
 	<a href="{{ url_for('showentries') }}" class="contentbutton">To-List</a>
 
-	{#% if error %}<p class=error>Error: {{ error }}</p>
+	{#% if error.title %}
+		<script type="text/javascript">alert("{{ error.title }}");</script>
+	{% endif %}
+	{% if error.text %}
+		<script type="text/javascript">alert("{{ error.text }}");</script>
+	{% endif %}
+	{% if error.text or error.title %}
+		<script type="text/javascript">history.go(-1);</script>
 	{% endif %#}
 
 	{% for message in get_flashed_messages(category_filter=['modpost']) %}	
@@ -19,10 +26,14 @@
 	<form action="{{ url_for('modifypost', post_id=post_id) }}" method="post">
 		<label for="title">Title:</label>&nbsp;
 		<input type="text" name="title" id="title" value="{{ title }}">
-		<br>
+		<div class="hint">Under 50 characters</div>
 		<label for="text">Text:</label>&nbsp;<br>
-		<textarea type="text" name="text" id="text">{{ text }}</textarea>
-		<br>
+		<textarea type="text" name="text" id="text">{{ text }}</textarea>		
+		<div class="hint">Under 2000 characters</div>
+		<label for="tags">Tag:</label>&nbsp;
+		<input type="text" name="tags" id="tags" value="{{ tags }}">
+		<div class="hint">Under 20 characters for each tag<br>
+						  which is separated by semicolon (;)</div>
 		<button type="submit" class="gobutton" id="gopost">Modify</button>
 	</form>
 	</div>

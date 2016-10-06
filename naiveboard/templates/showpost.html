@@ -1,14 +1,35 @@
 {% extends 'layout.html' %}
 
+{% block ck_message %}
+{% if popup %}
+	<div class="ck-popup">
+	Are you sure you want to delete this post?<br>
+	<a href="{{ url_for('deletepost', post_id=post.id) }}">Yes</a>
+	<a href="{{ url_for('showpost', post_id=post.id) }}">No</a>
+	</div>	
+{% endif %}
+
+{#% if not get_flashed_messages(category_filter=['addcom'])|length == 0 %}
+	<div class="ck-popup">
+	{% for message in get_flashed_messages(category_filter=['addcom']) %}	
+		{{ message }}<br>
+	{% endfor %}
+	<a href="{{ url_for('showpost', post_id=post.id) }}">OK</a>
+	</div>
+{% endif %#}
+{% endblock %}
+
 {% block ck_contents %}
 <div id="ck-entries">
 	<a href="{{ url_for('showentries') }}" class="contentbutton">To-List</a>
 
 	{% if session.logged_in and 
 	   post.user.username == session.username %}
-		<a href="{{ url_for('deletepost', post_id=post.id) }}" class="contentbutton">Delete</a>
+		<a href="{{ url_for('confirm_deletepost', post_id=post.id) }}" class="contentbutton">Delete</a>
 		<a href="{{ url_for('modifypost', post_id=post.id) }}" class="contentbutton">Modify</a>	
 	{% endif %}
+
+	<a href="javascript:history.back()" class="contentbutton">Back</a>
 
 	{#% if error.comment %}
 		<script type="text/javascript">
@@ -17,7 +38,7 @@
 		</script>
 	{% endif %#}
 	
-	{% for message in get_flashed_messages(category_filter=['addcom']) %}	
+	{% for message in get_flashed_messages(category_filter=['addcom']) %}
 		<script type="text/javascript">
 			alert("{{ message }}")
 		</script>
@@ -97,7 +118,7 @@
 	<span class="tagtitle">Tag:&nbsp;&nbsp;</span>
 	
 	{% for tag in post.tags %}
-		<span class="tagvalue">{{ tag.text }}</span>&nbsp;
+		<a href="{{ url_for('showtaggedlist', tag_id=tag.id) }}" class="tagvalue">{{ tag.text }}</a>&nbsp;
 	{% endfor %}
 
 </div>

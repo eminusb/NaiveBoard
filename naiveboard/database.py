@@ -68,7 +68,7 @@ class Comment(Base):
 		return '<Comment %s>' % (self.text)
 
 
-postxtag_table = Table('association', Base.metadata, 
+postxtag_table = Table('postxtag', Base.metadata, 
 	Column('posttable_id', Integer, ForeignKey('posttable.id')),
 	Column('tagtable_id', Integer, ForeignKey('tagtable.id'))
 )
@@ -95,6 +95,7 @@ def check_username(username):
 	else:
 		return True
 
+
 def check_password(user, password):
 	user.passowrd == password
 	pass
@@ -105,14 +106,24 @@ def validate_username(username):
 	user = query.filter(User.username==username).first()
 	pass
 
+
 def print_table(classname):
-	cols = db_session.query(classname).order_by(classname.id).all()
-	for col in cols:
-		print(col)
+	rows = db_session.query(classname).order_by(classname.id).all()
+	for row in rows:
+		print(row)
 	print('\n')
 
-def delete_all_cols(classname):
-	cols = db_session.query(classname).order_by(classname.id).all()
-	for col in cols:
-		db_session.delete(col)
+
+def delete_all_rows(classname):
+	rows = db_session.query(classname).order_by(classname.id).all()
+	for row in rows:
+		db_session.delete(row)
 	db_session.commit()
+
+
+def get_taginput(tags):
+	tagtextlist = list()
+	for tag in tags:
+		tagtextlist.append(tag.text)
+	return "; ".join(tagtextlist)
+
