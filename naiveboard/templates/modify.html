@@ -21,7 +21,7 @@
 	{% endfor %}
 
 	{% if session.logged_in %}
-	<h3 class="title">Add a new post.</h3>
+	<h3 class="title">Modify the post.</h3>
 	<div class="input">
 	<form action="{{ url_for('modifypost', post_id=post_id) }}" method="post">
 		<label for="title">Title:</label>&nbsp;

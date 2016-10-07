@@ -160,6 +160,7 @@ def addpost():
 			tags  = request.form['tags']
 			tagtextlist = parse_taginput(tags)
 			#tags  = parse_taginput(request.form['tags'])
+			taginput = "; ".join(tagtextlist)
 			now = datetime.datetime.now()
 
 			if len(title) == 0:
@@ -374,3 +375,29 @@ def showtaggedlist(tag_id):
 @app.route('/test')
 def test():
 	return render_template('test.html')
+
+
+@app.route('/AustinBoard/search', methods=['POST', 'GET'])
+def searchposts():
+
+	print(request.method)
+
+	if request.method == 'POST':
+		posts = list()
+		keyword = request.form['keyword']
+		allposts = db_session.query(Post).order_by(desc('id'))
+		for post in allposts:
+			if (post.title).find(keyword) != -1 \
+				or (post.text).find(keyword) != -1:
+				posts.append(post)
+
+		numposts = db_session.query(Post).count()
+		numusers = db_session.query(User).count()
+		alltags = db_session.query(Tag).order_by('id')
+		today = datetime.datetime.now().strftime("%y-%m-%d")					
+		return render_template('search.html', 
+						   keyword=keyword, entries=posts,
+						   numusers=numusers, numposts=numposts, 
+						   today=today, alltags=alltags)
+
+	return redirect(url_for('showentries'))
