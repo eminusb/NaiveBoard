@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block ck_message %}
+{% if popup == 'alert' %}
+	<div class="ck-popup">
+		{% for message in get_flashed_messages(category_filter=['addpost']) %}
+			{{ message }}<br>
+		{% endfor %}		
+		<a href="javascript:history.back()">Confirm</a>
+	</div>	
+{% endif %}
+{% endblock %}
+
+{% block ck_contents %}
+<div id="ck-entries">
+	<a href="{{ url_for('showentries') }}" class="contentbutton">To-List</a>
+
+	{% if session.logged_in %}
+	<h3 class="title">Add a new post.</h3>
+	<div class="input">
+	<form action="{{ url_for('addpost') }}" method="post">
+		<label for="title">Title:</label>&nbsp;
+		<input type="text" name="title" id="title" value="{{ title }}">		
+		<div class="hint">Under 50 characters</div>
+		<label for="text">Text:</label>&nbsp;<br>
+		<textarea type="text" name="text" id="text">{{ text }}</textarea>
+		<div class="hint">Under 2000 characters</div>
+		<label for="tags">Tag:</label>&nbsp;
+		<input type="text" name="tags" id="tags" value="{{ tags }}">
+		<div class="hint">Under 20 characters for each tag<br>
+						  which is separated by semicolon (;)</div>
+		<button type="submit" class="gobutton" id="gopost">Go!</button>
+	</form>
+	</div>
+	{% else %}
+	<h3 class="title">Please log in first.</h3>
+	{% endif %}
+</div>
+{% endblock %}

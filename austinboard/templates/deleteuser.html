@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block ck_message %}
+{% if popup == 'alert' %}
+	<div class="ck-popup">
+		{% for message in get_flashed_messages(category_filter=['deluser']) %}	
+			{{ message }}<br>
+		{% endfor %}		
+		<a href="javascript:history.back()">Confirm</a>
+	</div>	
+{% endif %}
+{% endblock %}
+
+{% block ck_contents %}
+<div class="ck-signup">
+	<a href="{{ url_for('showentries') }}" class="contentbutton">To-List</a>
+
+	<h3 class="title">Are you sure you want to delete your account?</h3>
+	
+	<div class="input">
+	<form action="{{ url_for('deleteuser') }}" method="post">
+		<label for="username">Username:</label>&nbsp;
+		{{ session.username }}<br>
+		<label for="password">Password:</label>&nbsp;
+		<input type="password" name="password">
+		<br><br>
+		<button type="submit">Delete!!</button>
+	</form>
+	</div>
+</div>
+{% endblock %}

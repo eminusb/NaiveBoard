@@ -1,0 +1,410 @@
+body{
+	background-color: #0B5345;
+	padding: 0px;
+	margin: 0px;
+}
+
+* {
+-webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+       -box-sizing: border-box;
+color: #D0ECE7;
+}
+
+
+#ck-header {
+	width: 960px;
+	margin: 20px auto;
+	padding: 10px;
+	color: #E3E4E5;	
+	position: relative;
+	/*border: 1px solid #AA1111;*/
+}
+
+#ck-header h1 a{
+	color: #E3E4E5;
+	text-decoration: none;
+}
+#ck-header .statstitle {
+	font-size: 0.8rem;
+	color: #F6F7F8;
+}
+#ck-header .statsvalue {	
+	font-size: 0.8rem;
+	font-weight: bold;
+	color: #F4733D;
+}
+
+
+#ck-frame {
+	width: 960px;
+	/*margin: 15px auto;*/
+	margin: 20px auto;
+	padding: 0px;
+	/*order: 1px solid #1111AA;*/
+}
+
+
+#ck-login {
+	width: 17.4rem;
+	height: 6.4rem;
+	padding-left: 0.4rem;
+	border: 1px solid #A2D9CE;
+	font-weight: bold;
+	vertical-align: middle;
+	display: table-cell;
+	position: relative;
+}
+
+#ck-login label{
+	display: inline-block;
+	width: 5rem;
+	text-align: right;
+}
+
+#ck-login input{
+	width: 7rem;
+	color: #111111;
+}
+
+#ck-login #buttonlogin{
+	display: block;
+	position: absolute; top:0.5rem; right:0.4rem;
+	width: 3.8rem;
+	height: 3rem;
+	background-color: #D0ECE7;
+	color: #0B5345;
+	border-radius: 0.5rem;
+	text-align: center;
+	line-height: 3rem;
+}
+
+#ck-login #buttonlogout{
+	display: block;
+	position: absolute; top:0.5rem; right:0.4rem;
+	width: 3.8rem;
+	height: 3rem;
+	background-color: #D0ECE7;
+	color: #0B5345;
+	border-radius: 0.5rem;
+	text-align: center;
+	line-height: 3rem;
+	font-size: 0.8rem;
+	text-decoration: none;
+}
+
+
+.ck-signup {	
+	width: 42rem;
+	height: 19.7rem;	
+	float: right;	
+	padding: 10px;
+	border: 1px solid #A2D9CE;
+}
+
+.ck-signup .title {
+	color: #F6F7F8;
+	padding-left: 10px;
+}
+.ck-signup label {
+	display: inline-block;
+	width: 12rem;
+	text-align: right;
+}
+
+.ck-signup input{
+	width: 10rem;
+	color: #111111;
+}
+
+.ck-signup button{
+	display: block;
+	width: 4rem;
+	height: 2rem;
+	background-color: #D0ECE7;
+	color: #0B5345;
+	border-radius: 0.5rem;
+	text-align: center;
+	margin-left: 15.5rem;
+}
+
+
+.hint{
+	color: #F6F7F8;
+	font-size: 0.8rem;
+	font-weight: normal;
+	text-align: right;
+	margin-right: 0.4rem;
+	margin-bottom: 0.4rem;
+}
+
+.hint a{
+	color: #F6F7F8;
+}
+
+.loginfo{
+	font-weight: normal;
+}
+
+
+#ck-entries {	
+	width: 42rem;
+	height: 45rem;
+	float: right;
+	padding: 10px;
+	border: 1px solid #A2D9CE;
+	/*overflow: auto;*/
+}
+
+.contentbutton{
+	/*display: block;*/
+	width: 4rem;
+	height: 2rem;
+	background-color: #D0ECE7;
+	color: #0B5345;
+	border-radius: 0.5rem;
+	text-align: center;
+	line-height: 2rem;
+	font-size: 0.8rem;
+	text-decoration: none;
+	font-weight: bold;	
+	padding: 0.2rem;
+}
+
+.gobutton{
+	/*display: inline-block;*/
+	/*width: 3rem;*/
+	height: 1.5rem;
+	background-color: #D0ECE7;
+	color: #0B5345;
+	border-radius: 0.5rem;
+	text-align: center;
+	font-weight: bold;
+	float: right;
+	margin-right: 2rem;
+}
+
+#ck-entries input, textarea {
+	width: 36rem;
+	color: #111111;
+	/*margin-bottom: 0.5rem;*/
+}
+
+#ck-entries #searchinput {	
+	width: 8rem;
+	margin-left: 12rem;
+	margin-top: 1rem;
+
+}
+
+#searchbutton {
+	height: 1.5rem;
+	background-color: #D0ECE7;
+	color: #0B5345;
+	border-radius: 0.5rem;
+	text-align: center;
+	font-weight: bold;
+}
+
+#ck-entries label{
+	display: inline-block;
+	width: 2rem;
+	text-align: right;
+}
+#ck-entries textarea {	
+	height: 26rem;
+	margin-left: 2.8rem;
+}
+#ck-entries #commentarea {
+	margin-top: 0.5rem;
+	height: 3rem;	
+}
+#ck-entries .hint {
+	color: #F6F7F8;
+	font-size: 0.8rem;
+	font-weight: normal;
+	text-align: right;
+	margin-right: 1.9rem;
+	margin-bottom: 0.4rem;
+}
+
+#ck-entrybox {	
+	width: 41rem;	
+	height: 38rem;
+	padding: 0px;
+	/*order: 1px solid #A2D9CE;*/
+	overflow: auto;
+}
+#ck-postbox {	
+	width: 41rem;	
+	height: 32rem;
+	padding: 0px; 
+	/*border: 1px solid #A2D9CE;*/
+	overflow: auto;
+}
+
+
+
+.tagtitle {
+	font-size: 1rem;
+	color: #F6F7F8;
+}
+.tagvalue {	
+	font-size: 1rem;	
+	color: #F4733D;
+	background-color: #38595E;
+	text-decoration: none; 
+	/*#0B5345;*/
+}
+.titletag {	
+	font-size: 1.2rem;	
+	font-weight: bold;
+	color: #F4733D;
+	background-color: #38595E;
+	margin-left: 0.5rem;
+	/*#0B5345;*/
+}
+
+#ck-footer {
+	width: 960px;
+	clear: both;
+	padding: 20px;
+	font-size: 0.8rem;
+	margin: 0px auto;
+	color: #D0ECE7;
+	/*border: 1px solid #A2D9CE;*/
+}
+
+.entry-id {
+	color: #E3E4E5;	
+	padding-left: 0.1rem;
+	padding-right: 0.1rem;
+	font-size: 0.8rem;
+}
+
+.entry-title {	
+	padding-left: 1rem;
+	text-align: left;	
+	color: #D0ECE7;
+	/*color: #2CC0B3;	*/
+	text-decoration: none;
+	font-size: 0.8rem;
+	/*line-height: 0.5rem;*/
+}
+
+.entry-title a{
+	color: #2CC0B3;	
+	text-decoration: none;
+	font-size: 1rem;
+	/*line-height: 1rem;*/
+}
+
+.entry-text {
+	/*color: #F6F7F8;*/
+	background-color: #38595E;
+	padding-left: 2rem;	
+	padding-right: 2rem;
+	text-align: justify;
+	color: #E3E4E5;
+	overflow: auto;
+	width: 40rem;
+	height: 26rem;
+}
+
+.entry-time, .entry-user {
+	color: #E3E4E5;
+	padding-left: 0.2rem;
+	padding-right: 0.2rem;
+	font-size: 0.8rem;	
+}
+
+.entry-comment{
+	width: 454px;
+	font-size: 0.9rem;
+	padding-left: 1rem;	
+	padding-right: 1rem;
+	padding-left: 0.2rem;
+	padding-right: 0.2rem;
+	background-color: #505050;	
+	text-align: justify;
+	word-break: break-all;
+}
+.entry-comment .loginfo{
+	color: #38595E;
+	padding-left: 3rem;	
+	text-align: left;
+	background-color: #E3E4E5;	
+}
+
+.index-id {		
+	width: 8%;
+}
+.index-time {
+	width: 10%;
+}
+
+th {
+	font-weight: bold;
+	font-size: 0.9rem;
+	border: 1px solid #38595E;
+}
+
+tr, td {
+	border: 1px solid #38595E;
+	font-weight: normal;
+	text-align: center;
+}
+
+table {
+	margin-top: 10px;
+	width: 40rem;
+}
+
+.error {
+	color: #FF7260;
+	font-weight: bold;
+}
+
+#ck-tagbox {
+	width: 17.4rem;
+	padding: 0.4rem;
+	border: 1px solid #A2D9CE;
+	/*font-weight: bold;*/
+	vertical-align: middle;
+	text-align: justify;
+	line-height: 1.5rem;
+	margin-top: 0.8rem;		
+	word-break: keep-all;
+}
+
+#ck-tagbox label{
+	display: inline-block;	
+	line-height: 2rem;
+	font-weight: bold;		
+}
+
+#ck-header .ck-popup {
+	display: block;
+	position: absolute; top:12rem; left:27rem;	
+	border: 1px solid #FF7260;
+	font-size: 1rem;
+	color: #FF7260;
+	background-color: #27484C;
+	font-weight: bold;
+	padding: 1rem;
+	text-align: center;
+}
+
+.ck-popup a{
+	display: inline-block;
+	/*width: 3rem;*/
+	height: 1.4rem;
+	background-color: #FF7260;
+	color: #505050;
+	border-radius: 0.4rem;
+	text-align: center;	
+	margin: 0.8rem;
+	margin-bottom: 0rem;
+	padding: 0.2rem;
+	text-decoration: none;
+}
