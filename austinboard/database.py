@@ -2,10 +2,11 @@ from sqlalchemy import create_engine, Table, ForeignKey,\
 					   Column, Integer, Unicode, String, Boolean
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
-#import datetime
+import os 
 
-#engine = create_engine('sqlite:///naiveboard/database.db', echo=False, convert_unicode=True)
-engine = create_engine('postgresql://postgres:dhcndrl1@localhost:5555/pgdatabase', echo=False, convert_unicode=True)
+#engine = create_engine('postgresql://postgres:dhcndrl1@localhost:5555/pgdatabase', echo=False, convert_unicode=True)
+local_db_url = 'postgresql://postgres:dhcndrl1@localhost:5555/pgdatabase'
+engine = create_engine(os.environ.get('DATABASE_URL', local_db_url), echo=False, convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
 Base = declarative_base()

@@ -150,11 +150,11 @@ def deleteuser():
 @app.route('/AustinBoard/main/popup=<popup>')
 @app.route('/AustinBoard/main', defaults={'popup': None})
 def showentries(popup):
-	
+	'''
 	print_table(User)
 	print_table(Post)
 	print_table(Tag)
-
+	'''
 	ctx = update_stats()
 	ctx['popup'] = popup
 	return render_template('main.html', **ctx)
