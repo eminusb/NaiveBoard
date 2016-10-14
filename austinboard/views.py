@@ -6,13 +6,15 @@ from austinboard.database import engine, db_session, Base, \
 from sqlalchemy import desc
 from austinboard.nl2br import nl2br
 import datetime
+import os
 
 
 app = Flask(__name__)
 app.config.update(
 	SECRET_KEY='AUSTINBOARD',
 	USERNAME='admin',
-	PASSWORD='default'
+	PASSWORD='default',
+	SERVER_NAME=os.environ.get('SERVER_NAME', '127.0.0.1:5000')
 )
 
 app.jinja_env.filters['nl2br'] = nl2br
