@@ -148,7 +148,7 @@ def deleteuser():
 
 @app.route('/')
 def main():
-	redirect(url_for('showentries'))
+	return redirect(url_for('showentries'))
 
 	
 
