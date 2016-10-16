@@ -11,10 +11,7 @@ import os
 
 app = Flask(__name__)
 app.config.update(
-	SECRET_KEY='AUSTINBOARD',
-	USERNAME='admin',
-	PASSWORD='default',
-	SERVER_NAME=os.environ.get('SERVER_NAME', '127.0.0.1:5000')
+	SECRET_KEY='DRAOBNITSUA'
 )
 
 app.jinja_env.filters['nl2br'] = nl2br
@@ -53,7 +50,7 @@ def parse_taginput(taginput):
 
 
 
-@app.route('/AustinBoard/login', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def login():
 
 	popup = None
@@ -75,7 +72,7 @@ def login():
 	return redirect(url_for('showentries', popup=popup))
 
 
-@app.route('/AustinBoard/signup', methods=['POST', 'GET'])
+@app.route('/signup', methods=['POST', 'GET'])
 def signup():
 
 	popup = None
@@ -119,13 +116,13 @@ def signup():
 	return render_template('signup.html', **ctx)
 	
 
-@app.route('/AustinBoard/logout')
+@app.route('/logout')
 def logout():
 	session['logged_in'] = False
 	return redirect(url_for('showentries'))
 
 
-@app.route('/AustinBoard/deleteuser', methods=['POST', 'GET'])
+@app.route('/deleteuser', methods=['POST', 'GET'])
 def deleteuser():
 
 	popup = None
@@ -149,8 +146,8 @@ def deleteuser():
 
 	
 
-@app.route('/AustinBoard/main/popup=<popup>')
-@app.route('/AustinBoard/main', defaults={'popup': None})
+@app.route('/main/popup=<popup>')
+@app.route('/main/', defaults={'popup': None})
 def showentries(popup):
 	'''
 	print_table(User)
@@ -163,7 +160,7 @@ def showentries(popup):
 
 
 
-@app.route('/AustinBoard/addpost', methods=['POST', 'GET'])
+@app.route('/addpost', methods=['POST', 'GET'])
 def addpost():	
 
 	title = ""
@@ -225,7 +222,7 @@ def addpost():
 
 
 
-@app.route('/AustinBoard/modifypost_<post_id>', methods=['POST', 'GET'])
+@app.route('/modifypost_<post_id>', methods=['POST', 'GET'])
 def modifypost(post_id):
 
 	post = db_session.query(Post).filter(Post.id==post_id).one()
@@ -298,8 +295,8 @@ def modifypost(post_id):
 
 
 
-@app.route('/AustinBoard/showpost_<post_id>/popup=<popup>')
-@app.route('/AustinBoard/showpost_<post_id>', defaults={'popup': None})
+@app.route('/showpost_<post_id>/popup=<popup>')
+@app.route('/showpost_<post_id>', defaults={'popup': None})
 def showpost(post_id, popup):
 
 	post = db_session.query(Post).filter(Post.id==post_id).first()
@@ -321,7 +318,7 @@ def required_login(endpoint):
 	return wrap
 '''
 
-@app.route('/AustinBoard/post_<post_id>_addcomment', methods=['POST', 'GET'])
+@app.route('/post_<post_id>_addcomment', methods=['POST', 'GET'])
 def addcomment(post_id):
 
 	post = db_session.query(Post).filter(Post.id==post_id).one()	
@@ -339,8 +336,7 @@ def addcomment(post_id):
 				error['comment'] = 'Too long comment (Under 140 characters)'
 				flash('Too long comment (Under 140 characters)', 'addcom')
 
-			messages = get_flashed_messages(category_filter=['addcom'])
-			print(messages)
+			messages = get_flashed_messages(category_filter=['addcom'])			
 			if len(messages) == 0:				
 				now = datetime.datetime.now()
 				comment = Comment(text, now)
@@ -361,7 +357,7 @@ def addcomment(post_id):
 
 
 
-@app.route('/AustinBoard/deletepost_<post_id>')
+@app.route('/deletepost_<post_id>')
 def deletepost(post_id):
 	post = db_session.query(Post).filter(Post.id==post_id).one()
 	
@@ -382,13 +378,13 @@ def deletepost(post_id):
 
 
 
-@app.route('/AustinBoard/confirm_deletepost_<post_id>')
+@app.route('/confirm_deletepost_<post_id>')
 def confirm_deletepost(post_id):
 	return redirect(url_for('showpost', post_id=post_id, popup='confirm'))
 
 
 
-@app.route('/AustinBoard/taggedlist_<tag_id>')
+@app.route('/taggedlist_<tag_id>')
 def showtaggedlist(tag_id):
 
 	tag = db_session.query(Tag).filter(Tag.id==tag_id).first()
@@ -399,10 +395,8 @@ def showtaggedlist(tag_id):
 
 
 
-@app.route('/AustinBoard/search', methods=['POST', 'GET'])
+@app.route('/search', methods=['POST', 'GET'])
 def searchposts():
-
-	print(request.method)
 
 	if request.method == 'POST':
 		posts = list()
