@@ -144,6 +144,12 @@ def deleteuser():
 	ctx['popup'] = popup
 	return render_template('deleteuser.html', **ctx)
 
+
+
+@app.route('/')
+def main():
+	redirect(url_for('showentries'))
+
 	
 
 @app.route('/main/popup=<popup>')
