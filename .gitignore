@@ -1,2 +1,6 @@
 *.sublime-*
 */__pycache__
+
+.*swp
+.*un~
+*.py~
