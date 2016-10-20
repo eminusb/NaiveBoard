@@ -68,23 +68,17 @@ def login():
 	if user == None:
 		error['login'] = 'Invalid username'
 		flash('Invalid username', 'login')
+		popup = 'alert'	
+	elif user.password != hash_password(request.form['password']):
+		error['login'] = 'Invalid password'
+		flash('Invalid password', 'login')
 		popup = 'alert'
-	elif len(user.password) != 32:
-		if user.password != request.form['password']:
-			error['login'] = 'Invalid password'
-			flash('Invalid password', 'login')
-			popup = 'alert'
-
-	elif len(user.password) == 32:
-		if user.password != hash_password(request.form['password']):
-			error['login'] = 'Invalid password'
-			flash('Invalid password', 'login')
-			popup = 'alert'
 	else:
 		session['logged_in'] = True
 		session['username'] = request.form['username']
 	
 	return redirect(url_for('showentries', popup=popup))
+
 
 
 @app.route('/signup', methods=['POST', 'GET'])
@@ -170,14 +164,13 @@ def main():
 @app.route('/main/popup=<popup>')
 @app.route('/main/', defaults={'popup': None})
 def showentries(popup):
-	
-	'''
+
 	users = db_session.query(User).all()
 	for user in users:		
 		if len(user.password) != 32:
 			user.password = hash_password(user.password)	
 			db_session.commit()
-	'''
+	
 	print_table(User)
 	#print_table(Post)
 	#print_table(Tag)
