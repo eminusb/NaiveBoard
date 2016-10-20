@@ -7,7 +7,7 @@ from sqlalchemy import desc
 from austinboard.nl2br import nl2br
 import datetime
 import os
-
+import hashlib
 
 app = Flask(__name__)
 app.config.update(
@@ -49,6 +49,14 @@ def parse_taginput(taginput):
 	return taglist
 
 
+def hash_password(password):
+	salt = os.environ.get('SALT', '')
+	db_password = password + salt
+	h = hashlib.md5(db_password.encode())
+	#h = hashlib.md5(password.encode())
+	return h.hexdigest()
+
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -61,7 +69,7 @@ def login():
 		error['login'] = 'Invalid username'
 		flash('Invalid username', 'login')
 		popup = 'alert'
-	elif user.password != request.form['password']:		
+	elif user.password != hash_password(request.form['password']):
 		error['login'] = 'Invalid password'
 		flash('Invalid password', 'login')
 		popup = 'alert'
@@ -101,8 +109,8 @@ def signup():
 				flash('Invalid confirm password', 'signup')
 		
 		messages = get_flashed_messages(category_filter=['signup'])
-		if len(messages) == 0:
-			user = User(username, password)
+		if len(messages) == 0:			
+			user = User(username, hash_password(password))
 			db_session.add(user)
 			db_session.commit()
 			session['logged_in'] = True
@@ -155,11 +163,17 @@ def main():
 @app.route('/main/popup=<popup>')
 @app.route('/main/', defaults={'popup': None})
 def showentries(popup):
-	'''
+	
+	users = db_session.query(User).all()
+	for user in users:		
+		if len(user.password) != 32:
+			user.password = hash_password(user.password)	
+			db_session.commit()
+
 	print_table(User)
-	print_table(Post)
-	print_table(Tag)
-	'''
+	#print_table(Post)
+	#print_table(Tag)
+	
 	ctx = update_stats()
 	ctx['popup'] = popup
 	return render_template('main.html', **ctx)
@@ -404,18 +418,50 @@ def showtaggedlist(tag_id):
 @app.route('/search', methods=['POST', 'GET'])
 def searchposts():
 
+	'''
 	if request.method == 'POST':
-		posts = list()
+		posts = list()		
 		keyword = request.form['keyword']
 		allposts = db_session.query(Post).order_by(desc('id'))
 		for post in allposts:
 			if (post.title).find(keyword) != -1 \
 				or (post.text).find(keyword) != -1:
-				posts.append(post)
+				posts.append(post)				
 		
 		ctx = update_stats()
 		ctx['keyword'] = keyword
-		ctx['posts'] = posts
+		ctx['posts'] = posts		
 		return render_template('searchposts.html', **ctx)
+	'''
+	if request.method == 'POST':
+		ids = list()
+		keyword = request.form['keyword']
+		allposts = db_session.query(Post).order_by(desc('id'))
+		for post in allposts:
+			if (post.title).find(keyword) != -1 \
+				or (post.text).find(keyword) != -1:
+				ids.append(post.id)
+
+		return redirect(url_for('showsearchedposts', keyword=keyword, ids=ids))
 
 	return redirect(url_for('showentries'))
+
+
+@app.route('/searched_by_<keyword>/<ids>')
+def showsearchedposts(keyword, ids):
+
+	ids = ids.strip('[')
+	ids = ids.strip(']')
+	ids = ids.split(',')
+	
+	posts = list()
+	query = db_session.query(Post)	
+
+	for id in ids:
+		posts.append(query.filter(Post.id==id).first())
+
+	ctx = update_stats()
+	ctx['keyword'] = keyword
+	ctx['posts'] = posts
+
+	return render_template('searchposts.html', **ctx)

@@ -2,9 +2,8 @@
 
 {% block ck_contents %}
 <div id="ck-entries">
-	{#% if session.logged_in %}
-	<a href="{{ url_for('addpost') }}" class="contentbutton">Add-post</a>
-	{% endif %#}
+	<a href="{{ url_for('showentries') }}" class="contentbutton">To-List</a>
+
 	<span class="titletag">{{ tag.text }}</span>
 	<div id="ck-entrybox">
 	<table>

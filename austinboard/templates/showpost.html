@@ -29,7 +29,7 @@
 
 	<a href="javascript:history.back()" class="contentbutton">Back</a>
 
-	<div id=ck-postbox>
+	
 	<table>
 		<thead>
 			<tr>
@@ -59,37 +59,52 @@
 						{{ post.date }}
 					{% endif %}
 				</td>				
-			</tr>
-			<tr>
-				<td colspan="4" class="entry-text">
-					{{ post.text|nl2br }}
-				</td>
-			</tr>
-			{% for comment in post.comments %}
-			<tr>
-				<td>&#8627;</td>				
-				<td class="entry-comment">
-					{{ comment.text }}
-				</td>
-				<td class="entry-time">
-					{% if comment.user == None %}
-						Deleted user
-					{% else %}
-						{{ comment.user.username }}
-					{% endif %}
-				</td>
-				<td class="entry-time">			
-					{% if comment.date == today %}
-						{{ comment.time }}
-					{% else %}
-						{{ comment.date }}
-					{% endif %}
-				</td>				
-			</tr>
-			{% endfor %}
+			</tr>			
 		</tbody>
 	</table>
+	<div id="ck-postbox">
+	<table>
+		<tr>
+			<td colspan="4" class="entry-text">
+			{{ post.text|nl2br }}
+			</td>
+		</tr>	
+	</table>
 	</div>
+	<div id="ck-commentbox">
+	<table>
+		{% for comment in post.comments %}
+		<tr>
+			<td>&#8627;</td>				
+			<td class="entry-comment">
+				{{ comment.text }}
+			</td>
+			<td class="entry-user">
+				{% if comment.user == None %}
+					Deleted user
+				{% else %}
+					{{ comment.user.username }}
+				{% endif %}
+			</td>
+			<td class="entry-time">			
+				{% if comment.date == today %}
+					{{ comment.time }}
+				{% else %}
+					{{ comment.date }}
+				{% endif %}
+			</td>
+		</tr>
+		{#% else %}
+		<tr>
+			<td>&#8627;</td>
+			<td class="entry-comment">No comment yet</td>
+			<td class="entry-time"></td>
+			<td class="entry-time"></td>
+		</tr>#}
+		{% endfor %}
+	</table>
+	</div>
+	
 	<br>
 
 	{% if session.logged_in %}

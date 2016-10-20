@@ -3,6 +3,7 @@ from sqlalchemy import create_engine, Table, ForeignKey,\
 from sqlalchemy.orm import scoped_session, sessionmaker, relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 import os 
+import sys
 
 #engine = create_engine('postgresql://postgres:dhcndrl1@localhost:5555/pgdatabase', echo=False, convert_unicode=True)
 local_db_url = 'postgresql://postgres:dhcndrl1@localhost:5555/pgdatabase'
@@ -18,7 +19,7 @@ class User(Base):
 
 	id = Column(Integer, primary_key=True)
 	username = Column(String(20), nullable=True, unique=True)
-	password = Column(String(20), nullable=True)	
+	password = Column(String(32), nullable=True)
 
 	def __init__(self, username, password):
 		self.username = username
@@ -91,7 +92,7 @@ class Tag(Base):
 def print_table(classname):
 	rows = db_session.query(classname).order_by(classname.id).all()
 	for row in rows:
-		print(row)
+		print(row, file=sys.stderr)
 	print('\n')
 
 
