@@ -7,9 +7,8 @@ from flask import redirect, url_for
 from austinboard.database import engine, db_session, Base
 from austinboard.app import app
 from austinboard.users import login, signup, logout, deleteuser
-from austinboard.post import showentries, addpost, modifypost, showpost, deletepost, confirm_deletepost, showtaggedlist, searchposts
-
-from austinboard.comment import addcomment
+from austinboard.posts import showentries, addpost, modifypost, showpost, deletepost, confirm_deletepost, showtaggedlist, searchposts
+from austinboard.comments import addcomment
 
 @app.before_request
 def init_db():	
