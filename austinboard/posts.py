@@ -5,6 +5,7 @@ import datetime
 
 from flask import Flask, render_template, session, request, \
 				  redirect, url_for, flash, get_flashed_messages
+from sqlalchemy import desc
 
 from austinboard.app import app
 from austinboard.database import db_session, User, Post, Tag, \
@@ -33,7 +34,7 @@ def parse_taginput(taginput):
 @app.route('/main/', defaults={'popup': None})
 def showentries(popup):
 
-	print_table(User)
+	#print_table(User)
 	#print_table(Post)
 	#print_table(Tag)
 	
