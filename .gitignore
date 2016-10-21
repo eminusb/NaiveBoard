@@ -1,6 +1,10 @@
 *.sublime-*
-*/__pycache__
+
+*__pycache__
+.env
 
 .*swp
 .*un~
 *.py~
+
+GOLD.txt

@@ -1,6 +1,6 @@
 
 from flask import Flask
-from austinboard.nl2br import nl2br, urllink
+from austinboard.filters import nl2br, urllink
 
 app = Flask(__name__)
 app.config.update(SECRET_KEY='DRAOBNITSUA')

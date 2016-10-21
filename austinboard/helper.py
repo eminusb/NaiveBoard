@@ -1,4 +1,5 @@
 
+import sys
 import datetime
 
 from sqlalchemy import desc
@@ -13,4 +14,7 @@ def update_stats():
 	today = datetime.datetime.now().strftime("%y-%m-%d")
 	return dict(entries=entries, alltags=alltags,
 				numusers=numusers, numposts=numposts, today=today)
+
+def printnow(text):
+	print(text, file=sys.stderr)
 

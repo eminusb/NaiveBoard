@@ -1,14 +1,23 @@
 # post.py
 
 import os
+import datetime
 
 from flask import Flask, render_template, session, request, \
 				  redirect, url_for, flash, get_flashed_messages
 
 from austinboard.app import app
-from austinboard.database import db_session, User, Post, print_table
+from austinboard.database import db_session, User, Post, Tag, \
+								 print_table
 from austinboard.helper import update_stats
 
+
+
+def get_taginput(tags):
+	tagtextlist = list()
+	for tag in tags:
+		tagtextlist.append(tag.text)
+	return "; ".join(tagtextlist)
 
 def parse_taginput(taginput):
 	taglist = list()	
