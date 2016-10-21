@@ -27,7 +27,7 @@
 		<a href="{{ url_for('modifypost', post_id=post.id) }}" class="contentbutton">Modify</a>	
 	{% endif %}
 
-	<a href="javascript:history.back()" class="contentbutton">Back</a>
+	{#<a href="javascript:history.back()" class="contentbutton">Back</a>#}
 
 	
 	<table>
@@ -66,7 +66,7 @@
 	<table>
 		<tr>
 			<td colspan="4" class="entry-text">
-			{{ post.text|nl2br }}
+			{{ post.text|nl2br|urllink }}
 			</td>
 		</tr>	
 	</table>
@@ -77,7 +77,7 @@
 		<tr>
 			<td>&#8627;</td>				
 			<td class="entry-comment">
-				{{ comment.text }}
+				{{ comment.text|urllink }}
 			</td>
 			<td class="entry-user">
 				{% if comment.user == None %}

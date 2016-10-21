@@ -5,9 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 import os 
 import sys
 
-#engine = create_engine('postgresql://postgres:dhcndrl1@localhost:5555/pgdatabase', echo=False, convert_unicode=True)
-local_db_url = 'postgresql://postgres:dhcndrl1@localhost:5555/pgdatabase'
-engine = create_engine(os.environ.get('DATABASE_URL', local_db_url), echo=False, convert_unicode=True)
+engine = create_engine(os.environ.get('DATABASE_URL'), echo=False, convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False, autoflush=False, bind=engine))
 
 Base = declarative_base()
@@ -101,11 +99,4 @@ def delete_all_rows(classname):
 	for row in rows:
 		db_session.delete(row)
 	db_session.commit()
-
-
-def get_taginput(tags):
-	tagtextlist = list()
-	for tag in tags:
-		tagtextlist.append(tag.text)
-	return "; ".join(tagtextlist)
 
