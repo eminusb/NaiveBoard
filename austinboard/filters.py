@@ -18,7 +18,7 @@ def nl2br(eval_ctx, value):
 	result = ""
 	for p in _paragraph_re.split(escape(value)):
 		newp = p.replace('\n', '<br>\n')
-		newp = '<p>'+newp+'</p>'
+		newp = '<p> '+newp+' </p>'
 		result += newp
 
 	if eval_ctx.autoescape:
